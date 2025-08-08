@@ -104,32 +104,27 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Kuma&#39;s Story" startnode="47" creator="Twine" creator-version="2.10.0" format="SugarCube" format-version="2.37.3" ifid="B3A4BC2A-DC18-4460-93BE-773BF303718D" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css"></style><script role="script" id="twine-user-script" type="text/twine-javascript">window.sendChoice = function(playerName, npcName, action, timeTaken, age) {
-	const endpoint = "https://script.google.com/macros/s/AKfycbwlHkjbQeLwxWbe7pf3Kpkcs85EeOQkFG33e-RC1Ll4qBe3dfnmf6qchfbc39wBE3TT9A/exec";
-
-	const payload = {
-		name: playerName,
-		age: age,
-		npc: npcName,
-		action: action,
-		time: timeTaken.toString()
-	};
-
-	fetch(endpoint, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify(payload)
-	}).then(response => {
-		if (response.ok) {
-			console.log("Dados enviados com sucesso");
-		} else {
-			console.warn("Falha ao enviar dados: ", response.status);
-		}
-	}).catch(error => {
-		console.error("Erro na requisição:", error);
-	});
+	<tw-storydata name="Kuma&#39;s Story" startnode="47" creator="Twine" creator-version="2.10.0" format="SugarCube" format-version="2.37.3" ifid="B3A4BC2A-DC18-4460-93BE-773BF303718D" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css"></style><script role="script" id="twine-user-script" type="text/twine-javascript">window.sendChoice = function(name, age, npc, action, time) {
+  fetch("https://script.google.com/macros/s/AKfycbzE1ihdhAnYv_wAHTxVvid4hoEDNOfobjz7NoijZG5wTEgrV5ibkyrnSZ6rWl1Pfuue6g/exec", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      name: name,
+      age: age,
+      npc: npc,
+      action: action,
+      time: time
+    })
+  })
+  .then(response => response.text())
+  .then(result => {
+    console.log("Sucesso:", result);
+  })
+  .catch(error => {
+    console.error("Erro na requisição:", error);
+  });
 };</script><tw-passagedata pid="1" name=" Assassinato" tags="" position="1700,3900" size="100,100">Kuma luta contra todos os soldados e com incrivel força consegue matar todos. 
 Agora todos assistem e aguardam por suas palavras.
 
@@ -563,7 +558,9 @@ Depois de tudo que esse lugar virou, é raro ver alguém voltando...
 Kuma sente um peso no peito. A vila parece diferente. Vazia. Esquecida.
 
 Ele respira fundo antes de responder. O que perguntar?
-&lt;&lt;run sendChoice(&quot;Teste&quot;, &quot;Sistema&quot;, &quot;Teste de envio&quot;, 2.1, &quot;99&quot;)&gt;&gt;
+&lt;&lt;script&gt;&gt;
+window.sendChoice(&quot;João&quot;, &quot;15&quot;, &quot;Guardião da Ponte&quot;, &quot;Fugir&quot;, &quot;Noite&quot;);
+&lt;&lt;/script&gt;&gt;
 [[ O que aconteceu com a vila?|Cena_Povo][$escolha = &quot;perguntar sobre taverna&quot;]]  
 [[Por que tudo parece tão abandonado?|Cena_Abandono][$escolha = &quot;perguntar sobre taverna&quot;]]  
 [[Você está bem, velho pescador? Como é o seu nome?|Cena_Pessoal][$escolha = &quot;perguntar sobre taverna&quot;]]
