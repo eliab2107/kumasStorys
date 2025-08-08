@@ -104,23 +104,40 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Kuma&#39;s Story" startnode="47" creator="Twine" creator-version="2.10.0" format="SugarCube" format-version="2.37.3" ifid="B3A4BC2A-DC18-4460-93BE-773BF303718D" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css"></style><script role="script" id="twine-user-script" type="text/twine-javascript">window.sendChoice = function(name, age, npc, action, time) {
-  fetch("https://script.google.com/macros/s/AKfycbzE1ihdhAnYv_wAHTxVvid4hoEDNOfobjz7NoijZG5wTEgrV5ibkyrnSZ6rWl1Pfuue6g/exec", {
+	<tw-storydata name="Kuma&#39;s Story" startnode="47" creator="Twine" creator-version="2.10.0" format="SugarCube" format-version="2.37.3" ifid="B3A4BC2A-DC18-4460-93BE-773BF303718D" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css"></style><script role="script" id="twine-user-script" type="text/twine-javascript">// Código no seu Twine (alterado)
+window.sendChoice = function(name, age, npc, action, time) {
+  // A URL do seu script permanece a mesma
+  const url = "https://script.google.com/macros/s/AKfycbzE1ihdhAnYv_wAHTxVvid4hoEDNOfobjz7NoijZG5wTEgrV5ibkyrnSZ6rWl1Pfuue6g/exec";
+
+  fetch(url, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      // Mude esta linha!
+      "Content-Type": "text/plain;charset=utf-8",
     },
+    // O corpo continua sendo uma string JSON, isso está correto.
     body: JSON.stringify({
       name: name,
       age: age,
       npc: npc,
       action: action,
       time: time
-    })
+    }),
+    // Adicione o modo 'no-cors' como uma camada extra de segurança, 
+    // embora a mudança no Content-Type seja a principal.
+    // Em alguns cenários, o modo 'no-cors' pode ser útil, mas a 
+    // mudança do Content-Type é a correção fundamental. 
+    // Tente primeiro sem ele. Se ainda falhar, adicione-o.
+    // mode: 'no-cors' 
   })
-  .then(response => response.text())
+  .then(response => {
+    // Com 'no-cors', a resposta é "opaca", então você não pode ler o texto.
+    // O importante é que a requisição foi enviada.
+    console.log("Requisição enviada com sucesso."); 
+    return response.text(); // Se não usar 'no-cors', pode ler a resposta.
+  })
   .then(result => {
-    console.log("Sucesso:", result);
+    console.log("Resposta do servidor:", result);
   })
   .catch(error => {
     console.error("Erro na requisição:", error);
